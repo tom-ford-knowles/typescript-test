@@ -84,4 +84,6 @@ const errorMethods = createErrorMethods([
     message: "Not found",
   },
 ])
-const { badRequest, notFound } = errorMethods
+const { badRequest } = errorMethods
+
+console.log(badRequest("override").message)
