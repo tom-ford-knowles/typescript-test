@@ -85,5 +85,3 @@ const errorMethods = createErrorMethods([
   },
 ])
 const { badRequest, notFound } = errorMethods
-
-const statusCode = badRequest().statusCode
