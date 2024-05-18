@@ -1,5 +1,3 @@
-# 3D Group - TypeScript assessment
-
 ## Setup
 
 We recommend using [nvm](https://github.com/nvm-sh/nvm) to manage the required node version. Once you have nvm available on your computer, run the following command to install the correct node version provided in `.nvmrc`:
