@@ -1,20 +1,44 @@
 // Please read the README for instructions on what to do.
+import { StatusCode } from "status-code-enum"
 
-function createErrorMethods(config) {
- // TODO: your function implementation here
+type MethodConfig = {
+  methodName: string
+  statusCode: StatusCode
+  message: string
 }
 
-const errorMethods = createErrorMethods(/* TODO: your config here */);
-const { badRequest, notFound } = errorMethods;
+type HttpResponse = {
+  statusCode: StatusCode
+  message: string
+}
 
-// Example usage: Bad Request
-badRequest();
-badRequest("Overriden bad request message.");
+function createErrorMethods(config: MethodConfig[]) {
+  const methods: {
+    [key: string]: (messageOverride?: string) => HttpResponse
+  } = {}
+  config.forEach(configObject => {
+    const methodName = configObject.methodName
+    methods[methodName] = function (messageOverride?: string): HttpResponse {
+      return {
+        statusCode: configObject.statusCode,
+        message: messageOverride ?? configObject.message,
+      }
+    }
+  })
 
-// Example usage: Not Found
-notFound();
-notFound("This is an override message for the 'Not Found' method.");
+  return methods
+}
 
-// Example usage: Gateway Timeout
-errorMethods.gatewayTimeout();
-errorMethods.gatewayTimeout("Overriding the default message.");
+const errorMethods = createErrorMethods([
+  {
+    methodName: "badRequest",
+    statusCode: StatusCode.ClientErrorBadRequest,
+    message: "Bad request",
+  },
+  {
+    methodName: "notFound",
+    statusCode: StatusCode.ClientErrorNotFound,
+    message: "Not found",
+  },
+])
+const { badRequest, notFound } = errorMethods
