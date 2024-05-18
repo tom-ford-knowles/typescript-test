@@ -54,7 +54,7 @@ type HttpResponse = {
   readonly message: string
 }
 
-function createErrorMethods(config: MethodConfig[]) {
+export function createErrorMethods(config: MethodConfig[]) {
   const methods: {
     [key: string]: (messageOverride?: string) => HttpResponse
   } = {}
